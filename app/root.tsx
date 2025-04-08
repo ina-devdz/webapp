@@ -6,6 +6,7 @@ import type { Route } from "./+types/root"
 import { LanguageSwitcher } from "./library/language-switcher"
 import { ClientHintCheck, getHints } from "./services/client-hints"
 import tailwindcss from "./tailwind.css?url"
+import NavBar from "./ui/Navbar"
 
 export async function loader({ context, request }: Route.LoaderArgs) {
 	const { lang, clientEnv } = context
@@ -24,6 +25,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
 	useChangeLanguage(lang)
 	return (
 		<>
+			<NavBar />
 			<Outlet />
 			{/* biome-ignore lint/security/noDangerouslySetInnerHtml: We set the window.env variable to the client env */}
 			<script dangerouslySetInnerHTML={{ __html: `window.env = ${JSON.stringify(clientEnv)}` }} />
@@ -43,6 +45,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 				<Links />
 			</head>
 			<body className="w-full h-full">
+				<div className="pt-48">h</div>
 				<LanguageSwitcher />
 				{children}
 				<ScrollRestoration />
