@@ -1,69 +1,251 @@
-import { useTranslation } from "react-i18next"
-import type { MetaFunction } from "react-router"
-import ResearchSection from "~/ui/Carousel"
-import { DrawerDemo } from "~/ui/Drawer"
-import { convertDateToUserTz } from "~/utils/dates"
-import type { Route } from "./+types/_index"
+import { useTranslation } from "react-i18next";
+import type { MetaFunction } from "react-router";
+import ResearchSection from "~/ui/Carousel";
+// import { DrawerDemo } from "~/ui/Drawer";
+import { convertDateToUserTz } from "~/utils/dates";
+import type { Route } from "./+types/_index";
+import Hero from "~/ui/Hero/index";
+import ElectoralServicesSection from "~/ui/Services";
 
 export const meta: MetaFunction = () => {
-	return [{ title: "New Remix App" }, { name: "description", content: "Welcome to Remix!" }]
-}
+  return [
+    { title: "New Remix App" },
+    { name: "description", content: "Welcome to Remix!" },
+  ];
+};
 
 export const loader = ({ request }: Route.LoaderArgs) => {
-	const timezoneDate = convertDateToUserTz(new Date(), request)
-	return {
-		timezoneDate: timezoneDate.toTimeString(),
-	}
-}
+  const timezoneDate = convertDateToUserTz(new Date(), request);
+  return {
+    timezoneDate: timezoneDate.toTimeString(),
+  };
+};
 
 export default function Index({ loaderData }: Route.ComponentProps) {
-	const { timezoneDate } = loaderData
-	const { t } = useTranslation()
+  const { timezoneDate } = loaderData;
+  const { t } = useTranslation();
 
-	return (
-		<div className="placeholder-index relative h-full min-h-screen w-screen dark:bg-gradient-to-b bg-white  dark:from-blue-950 dark:to-blue-900 dark:text-white sm:pb-16 sm:pt-8">
-			<div className="relative mx-auto max-w-[90rem] sm:px-6 lg:px-8">
-				<div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
-					<section className="absolute inset-0">
-						<img className="h-full w-full object-cover" src="/banner.png" alt="Cover" />
-						<div className="absolute inset-0 bg-slate-950/60 mix-blend-multiply" />
-					</section>
-					<section className="lg:pb-18 relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pt-32">
-						<h1 className="select-none overflow-hidden text-center text-7xl font-medium sm:text-6xl lg:text-8xl">
-							<span className="block pb-2 pr-2 text-center font-space uppercase text-white drop-shadow-md">
-								<img className="rounded-full size-80 m-auto" src="/logo.png" alt="Forge42 Logo" />
-								<span className="block h-full bg-gradient-to-tr from-[#48DDF3] to-[#FB4BB5] bg-clip-text pb-1 pr-1 text-center text-transparent dark:from-indigo-500 dark:to-sky-300 sm:inline sm:pb-0">
-									Base&nbsp;
-								</span>
-								<span className="text-center">Stack</span>
-							</span>
-						</h1>
-						<p className="mx-auto mt-8 max-w-lg text-center text-lg text-white sm:max-w-3xl md:mt-12">
-							Welcome to Forge 42 base stack. The minimal stack required to get you up and running. This stack was
-							chosen to provide a solid foundation for your project, without the bloat. Check the{" "}
-							<a
-								href="https://github.com/forge42dev/base-stack"
-								target={"_blank"}
-								className="text-white no-underline font-bold hover:cursor-pointer focus:text-white"
-								rel="noreferrer"
-							>
-								README.md
-							</a>{" "}
-							file for detailed instructions.
-						</p>
-						<div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-							<div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0" />
-						</div>
-					</section>
-				</div>
-			</div>
+  return (
+    <div className="placeholder-index relative h-full min-h-screen w-screen dark:bg-gradient-to-b bg-white  dark:from-blue-950 dark:to-blue-900 dark:text-white sm:pb-16 sm:pt-8">
+      <div className="relative mx-auto container sm:px-6 lg:px-8 mt-8">
+        <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
+          <Hero />
+        </div>
+        <ElectoralServicesSection />
+        <FundedBySection />
+        <ResearchSection />
+      </div>
+    </div>
+  );
+}
 
-			<div className="w-full text-center text-2xl mt-4">{t("hi")}</div>
-			<section className="absolute bottom-1 mb-2 w-full pb-1 pt-2 text-center sm:bottom-2 sm:pb-3 md:mb-0 md:mt-0">
-				Crafted with ❤️ / Time without timezone mismatch {timezoneDate}
-				<DrawerDemo />
-			</section>
-			<ResearchSection />
-		</div>
-	)
+function FundedBySection() {
+  return (
+    <section className="py-10 md:py-16 lg:py-20">
+      <div className="mx-auto w-full max-w-[1740px] px-4 md:px-8 lg:px-12">
+        <h2 className="font-h2 mb-10 lg:mb-12"> Funded by </h2>
+
+        {/* Grid View - Hidden on smaller screens, visible on md and up */}
+        <div className="grid-cols-12 gap-4 md:gap-6 hidden gap-y-10 md:grid">
+          {/* Funder 1 */}
+          <figure className="col-span-6 lg:col-span-3">
+            <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+              <img
+                src="https://cdn.sanity.io/images/pltlc3lm/production/cc0e1edcda081b0f1121b41abd5a9425199a71d1-64x48.svg"
+                srcSet="https://cdn.sanity.io/images/pltlc3lm/production/cc0e1edcda081b0f1121b41abd5a9425199a71d1-64x48.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/cc0e1edcda081b0f1121b41abd5a9425199a71d1-64x48.svg 2x"
+                alt="Life Line Ventures logo"
+                sizes="174px"
+                width="174"
+                loading="lazy"
+                decoding="async"
+                className="h-[48px] w-[174px] object-contain object-center"
+              />
+            </div>
+            <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+              “Residential energy accounts for about 20% of total greenhouse gas
+              emissions - Photoncycle has potential to bring that close to 0%”
+            </blockquote>
+            <figcaption className="font-body-xs text-grey-700">
+              Teemu Mattila, Partner and Head of Climate Investments at Lifeline
+              Ventures
+            </figcaption>
+          </figure>
+
+          {/* Funder 2 */}
+          <figure className="col-span-6 lg:col-span-3">
+            <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+              <img
+                src="https://cdn.sanity.io/images/pltlc3lm/production/194224cafce78d6b249404e3303b2cfc5883d021-176x32.svg"
+                srcSet="https://cdn.sanity.io/images/pltlc3lm/production/194224cafce78d6b249404e3303b2cfc5883d021-176x32.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/194224cafce78d6b249404e3303b2cfc5883d021-176x32.svg 2x"
+                alt="Eviny Ventures logo"
+                sizes="174px"
+                width="174"
+                loading="lazy"
+                decoding="async"
+                className="h-[48px] w-[174px] object-contain object-center"
+              />
+            </div>
+            <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+              “Photoncycle is one of those rare opportunities where ambition
+              meets execution.”
+            </blockquote>
+            <figcaption className="font-body-xs text-grey-700">
+              Jørgen Marek, Investment Director at Eviny Ventures
+            </figcaption>
+          </figure>
+
+          {/* Funder 3 */}
+          <figure className="col-span-6 lg:col-span-3">
+            <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+              <img
+                src="https://cdn.sanity.io/images/pltlc3lm/production/ca87199f9c0d5b031f0a04b53f4fc1e8df3400f2-114x32.svg"
+                srcSet="https://cdn.sanity.io/images/pltlc3lm/production/ca87199f9c0d5b031f0a04b53f4fc1e8df3400f2-114x32.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/ca87199f9c0d5b031f0a04b53f4fc1e8df3400f2-114x32.svg 2x"
+                alt="Luminar Ventures logo"
+                sizes="174px"
+                width="174"
+                loading="lazy"
+                decoding="async"
+                className="h-[48px] w-[174px] object-contain object-center"
+              />
+            </div>
+            <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+              “Photoncycle has the potential to revolutionize how we approach
+              renewable energy, making European households energy
+              self-sufficient.”
+            </blockquote>
+            <figcaption className="font-body-xs text-grey-700">
+              Jacob Key, Founding Partner at Luminar Ventures
+            </figcaption>
+          </figure>
+
+          {/* Funder 4 */}
+          <figure className="col-span-6 lg:col-span-3">
+            <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+              <img
+                src="https://cdn.sanity.io/images/pltlc3lm/production/a4059f274c6d907db786d5ddfbbbf6106a66b07b-174x20.svg"
+                srcSet="https://cdn.sanity.io/images/pltlc3lm/production/a4059f274c6d907db786d5ddfbbbf6106a66b07b-174x20.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/a4059f274c6d907db786d5ddfbbbf6106a66b07b-174x20.svg 2x"
+                alt="Momentum logo"
+                sizes="174px"
+                width="174"
+                loading="lazy"
+                decoding="async"
+                className="h-[48px] w-[174px] object-contain object-center"
+              />
+            </div>
+            <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+              “Photoncycle is one of the most potent startups we have come
+              across in the energy sector in the Nordics.”
+            </blockquote>
+            <figcaption className="font-body-xs text-grey-700">
+              Hilde Støle, Managing Partner at Momentum Partners
+            </figcaption>
+          </figure>
+        </div>
+
+        {/* Carousel View - Hidden on md and up */}
+        <div className="carousel overflow-hidden md:hidden">
+          {/* Note: The inline style needs to be an object in React */}
+          <div
+            className="flex pl-4"
+            style={{ transform: "translate3d(0px, 0px, 0px)" }}
+          >
+            {/* Carousel Item 1 */}
+            <figure className="mr-4 min-w-0 flex-[0_0_80%]">
+              <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+                <img
+                  src="https://cdn.sanity.io/images/pltlc3lm/production/cc0e1edcda081b0f1121b41abd5a9425199a71d1-64x48.svg"
+                  srcSet="https://cdn.sanity.io/images/pltlc3lm/production/cc0e1edcda081b0f1121b41abd5a9425199a71d1-64x48.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/cc0e1edcda081b0f1121b41abd5a9425199a71d1-64x48.svg 2x"
+                  alt="Life Line Ventures logo"
+                  sizes="174px"
+                  width="174"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-[48px] w-[174px] object-contain object-center"
+                />
+              </div>
+              <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+                “Residential energy accounts for about 20% of total greenhouse
+                gas emissions - Photoncycle has potential to bring that close to
+                0%”
+              </blockquote>
+              <figcaption className="font-body-xs text-grey-700">
+                Teemu Mattila, Partner and Head of Climate Investments at
+                Lifeline Ventures
+              </figcaption>
+            </figure>
+
+            {/* Carousel Item 2 */}
+            <figure className="mr-4 min-w-0 flex-[0_0_80%]">
+              <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+                <img
+                  src="https://cdn.sanity.io/images/pltlc3lm/production/194224cafce78d6b249404e3303b2cfc5883d021-176x32.svg"
+                  srcSet="https://cdn.sanity.io/images/pltlc3lm/production/194224cafce78d6b249404e3303b2cfc5883d021-176x32.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/194224cafce78d6b249404e3303b2cfc5883d021-176x32.svg 2x"
+                  alt="Eviny Ventures logo"
+                  sizes="174px"
+                  width="174"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-[48px] w-[174px] object-contain object-center"
+                />
+              </div>
+              <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+                “Photoncycle is one of those rare opportunities where ambition
+                meets execution.”
+              </blockquote>
+              <figcaption className="font-body-xs text-grey-700">
+                Jørgen Marek, Investment Director at Eviny Ventures
+              </figcaption>
+            </figure>
+
+            {/* Carousel Item 3 */}
+            <figure className="mr-4 min-w-0 flex-[0_0_80%]">
+              <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+                <img
+                  src="https://cdn.sanity.io/images/pltlc3lm/production/ca87199f9c0d5b031f0a04b53f4fc1e8df3400f2-114x32.svg"
+                  srcSet="https://cdn.sanity.io/images/pltlc3lm/production/ca87199f9c0d5b031f0a04b53f4fc1e8df3400f2-114x32.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/ca87199f9c0d5b031f0a04b53f4fc1e8df3400f2-114x32.svg 2x"
+                  alt="Luminar Ventures logo"
+                  sizes="174px"
+                  width="174"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-[48px] w-[174px] object-contain object-center"
+                />
+              </div>
+              <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+                “Photoncycle has the potential to revolutionize how we approach
+                renewable energy, making European households energy
+                self-sufficient.”
+              </blockquote>
+              <figcaption className="font-body-xs text-grey-700">
+                Jacob Key, Founding Partner at Luminar Ventures
+              </figcaption>
+            </figure>
+
+            {/* Carousel Item 4 */}
+            <figure className="mr-4 min-w-0 flex-[0_0_80%]">
+              <div className="mb-4 flex aspect-[5/4] items-center justify-center overflow-hidden rounded-[16px] bg-grey-100 lg:mb-6">
+                <img
+                  src="https://cdn.sanity.io/images/pltlc3lm/production/a4059f274c6d907db786d5ddfbbbf6106a66b07b-174x20.svg"
+                  srcSet="https://cdn.sanity.io/images/pltlc3lm/production/a4059f274c6d907db786d5ddfbbbf6106a66b07b-174x20.svg 1.5x, https://cdn.sanity.io/images/pltlc3lm/production/a4059f274c6d907db786d5ddfbbbf6106a66b07b-174x20.svg 2x"
+                  alt="Momentum logo"
+                  sizes="174px"
+                  width="174"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-[48px] w-[174px] object-contain object-center"
+                />
+              </div>
+              <blockquote className="font-body-l mb-4 text-grey-700 lg:mb-6">
+                “Photoncycle is one of the most potent startups we have come
+                across in the energy sector in the Nordics.”
+              </blockquote>
+              <figcaption className="font-body-xs text-grey-700">
+                Hilde Støle, Managing Partner at Momentum Partners
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

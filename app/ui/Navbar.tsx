@@ -1,92 +1,89 @@
-// Import necessary Framer Motion hooks and component
-import { motion, useMotionValueEvent, useScroll } from "motion/react"
-import { useState } from "react"
+// NavBar.tsx (Modified)
+
+import { motion, useMotionValueEvent, useScroll } from "motion/react"; // Correct import if using framer-motion
+import { useState } from "react";
+// import { NavLink, Link } from "react-router-dom"; // Use react-router-dom imports if that's your router
+import { SiteNavigation } from "./menu"; // Adjust path
+import { LanguageSwitcher } from "~/library/language-switcher"; // Adjust path
+
+// Removed TopBar import and usage from here
 
 const NavBar: React.FC = () => {
-	// 1. Get the scrollY MotionValue
-	const { scrollY } = useScroll()
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
 
-	// 2. State to control visibility based on scroll direction/position
-	const [isVisible, setIsVisible] = useState(true)
+  useMotionValueEvent(scrollY, "change", (current) => {
+    const previous = scrollY.getPrevious();
+    if (previous === undefined || typeof previous !== "number") return;
 
-	// 3. Use useMotionValueEvent to react efficiently to scroll changes
-	useMotionValueEvent(scrollY, "change", (current) => {
-		const previous = scrollY.getPrevious() // Get previous scroll value
+    const diff = current - previous;
+    // You might want to adjust the threshold based on the TopBar's height
+    // or when you want the hiding behavior to start.
+    const threshold = 80; // Or maybe something like topBarHeight + navBarHeight?
 
-		// Ensure previous is a number (it might be undefined initially)
-		if (previous === undefined || typeof previous !== "number") return
+    if (current < threshold) {
+      setHidden(false);
+    } else if (diff > 0 && current > threshold) {
+      // Scrolling down
+      setHidden(true);
+    } else if (diff < 0) {
+      // Scrolling up
+      setHidden(false);
+    }
+  });
 
-		const diff = current - previous
+  return (
+    // Removed the fragment <> </> wrapper unless needed for other reasons
+    <motion.nav
+      aria-label="Main navigation"
+      // --- CHANGE HERE ---
+      // Use 'sticky' instead of 'fixed' and ensure 'top-0' is present
+      className="sticky top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-20" // h-20 = 5rem = 80px
+      // --- END CHANGE ---
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-100%" }, // Hides the sticky bar by moving it up
+      }}
+      initial="visible"
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+    >
+      <div className="container mx-auto px-4 h-full flex justify-between items-center">
+        {/* Left side: Navigation Links (or maybe Logo here?) */}
+        {/* Consider reversing order visually if needed via flexbox */}
+        <SiteNavigation />
 
-		// Define a threshold (e.g., 10px) to avoid hiding immediately at the top
-		const threshold = 96
+        {/* Right side: Language Switcher & Mobile Menu */}
+        <div className="flex items-center gap-4">
+          {/* Placeholder for Mobile Menu Button */}
+          <div className="sm:hidden">
+            <button
+              aria-label="Open menu"
+              className="text-gray-600 dark:text-gray-300"
+              // Add onClick handler to toggle mobile menu state
+            >
+              {/* Hamburger Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* Add Mobile Menu Flyout/Dropdown component here, controlled by state */}
+    </motion.nav>
+  );
+};
 
-		// Logic to determine visibility:
-		if (current <= threshold) {
-			// Always show if near or at the very top
-			setIsVisible(true)
-		} else if (diff > 0 && current > threshold) {
-			// Scrolling down and past the threshold: Hide
-			setIsVisible(false)
-		} else if (diff < 0) {
-			// Scrolling up: Show
-			setIsVisible(true)
-		}
-		// If diff === 0 (no change), visibility remains as it was.
-	})
-
-	return (
-		// Use AnimatePresence if you want exit animations, though simple y-translate might not strictly need it
-		// <AnimatePresence>
-		<motion.nav
-			// Use key prop if using AnimatePresence and want remount on changes
-			// key="navbar"
-
-			// Base Tailwind styles remain the same
-			className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-xs p-4 flex justify-between items-center"
-			// Define animation variants (alternative to direct animate prop)
-			// variants={{
-			//   visible: { y: 0 },
-			//   hidden: { y: "-100%" }
-			// }}
-			// initial="visible" // Initial state variant name
-			// animate={isVisible ? "visible" : "hidden"} // Control variant based on state
-
-			// Or directly use initial/animate props (simpler for this case)
-			initial={{ y: 0 }} // Start visible at the top
-			animate={{ y: isVisible ? 0 : "-100%" }} // Animate y based on state
-			// Define the transition
-			transition={{ duration: 0.3, ease: "easeInOut" }}
-		>
-			{/* Left side: Logo or Brand */}
-			<div className="text-xl font-bold text-gray-800 dark:text-white">MyApp</div>
-
-			{/* Right side: Navigation Links */}
-			<ul className="flex space-x-4 sm:space-x-6">
-				<li>
-					<a href="#home" className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">
-						Home
-					</a>
-				</li>
-				<li>
-					<a href="#features" className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">
-						Features
-					</a>
-				</li>
-				<li>
-					<a href="#about" className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">
-						About
-					</a>
-				</li>
-				<li>
-					<a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">
-						Contact
-					</a>
-				</li>
-			</ul>
-		</motion.nav>
-		// </AnimatePresence>
-	)
-}
-
-export default NavBar
+export default NavBar;

@@ -25,7 +25,7 @@ const supportedLanguagesList: Language[] = [
   { code: "ar", name: "العربية" },
 ];
 
-const LanguageSwitcher = () => {
+const LS = () => {
   const { i18n } = useTranslation();
   const currentLanguageCode = i18n.language.split("-")[0]; // Get base language code (e.g., 'en' from 'en-US')
 
@@ -75,7 +75,7 @@ const LanguageSwitcher = () => {
   );
 };
 
-export { LanguageSwitcher };
+export { LS };
 
 // Helper function for conditional classnames (often included in shadcn setup)
 // Make sure you have this utility or install clsx + tailwind-merge
