@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 // import { useLocation } from "react-router";
 // import { Link } from "../link"; // Assuming custom Link is not strictly needed for language change itself
 
-import { Globe, Check } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button"; // Assuming Shadcn Button path
 import {
   DropdownMenu,
@@ -11,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"; // Assuming Shadcn Dropdown path
+import { Check, Globe } from "@phosphor-icons/react";
 import { cn } from "~/lib/utils";
 
 // Define language structure for clarity
@@ -40,8 +40,23 @@ const LanguageSwitcher = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {/* Mobile-first: Compact icon button */}
-        <Button variant="outline" size="icon" aria-label="Change language">
-          <Globe size={20} weight="bold" /> {/* Phosphor icon */}
+        <Button
+          variant="outline"
+          size="sm"
+          aria-label="Change language"
+          className="cursor-pointer"
+        >
+          <div className="flex items-center justify-center gap-2">
+            <Globe size={20} weight="bold" /> {/* Phosphor icon */}
+            <p
+              className={cn(
+                "flex items-center justify-between cursor-pointer", // Layout and cursor
+                currentLanguageCode === "ar" ? "rtl" : "ltr", // Basic RTL styling for the item itself
+              )}
+            >
+              <span>{currentLanguageCode === "ar" ? "اللغة" : "Language"}</span>
+            </p>
+          </div>
         </Button>
       </DropdownMenuTrigger>
 

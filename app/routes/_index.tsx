@@ -1,11 +1,16 @@
 import { useTranslation } from "react-i18next";
 import type { MetaFunction } from "react-router";
-import ResearchSection from "~/ui/Carousel";
+import ResearchSection from "~/ui/Articles";
+import Hero from "~/ui/Hero/index";
+import ElectoralServicesSection from "~/ui/Services";
 // import { DrawerDemo } from "~/ui/Drawer";
 import { convertDateToUserTz } from "~/utils/dates";
 import type { Route } from "./+types/_index";
-import Hero from "~/ui/Hero/index";
-import ElectoralServicesSection from "~/ui/Services";
+import { InfiniteSlider } from "~/components/ui/infinite-slider";
+import { InfiniteSliderHoverSpeed } from "~/ui/InfiniteSlider";
+import Scroll from "~/ui/HorizontalScroll/Scroll";
+import HorizontalEventTimelineCarousel from "~/ui/Timeline/HTimeline";
+import VerticalEventTimeline from "~/ui/Timeline/VTimeline";
 
 export const meta: MetaFunction = () => {
   return [
@@ -27,14 +32,15 @@ export default function Index({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="placeholder-index relative h-full min-h-screen w-screen dark:bg-gradient-to-b bg-white  dark:from-blue-950 dark:to-blue-900 dark:text-white sm:pb-16 sm:pt-8">
-      <div className="relative mx-auto container sm:px-6 lg:px-8 mt-8">
-        <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
+      <div className="relative mx-auto container sm:px-6 lg:px-1 mt-1">
+        <div className="relative sm:overflow-hidden sm:rounded-lg">
           <Hero />
         </div>
-        <ElectoralServicesSection />
-        <FundedBySection />
-        <ResearchSection />
       </div>
+      <Scroll />
+      <VerticalEventTimeline />
+      <ElectoralServicesSection />
+      <ResearchSection />
     </div>
   );
 }

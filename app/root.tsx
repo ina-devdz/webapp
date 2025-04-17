@@ -14,8 +14,8 @@ import type { Route } from "./+types/root";
 // import { LanguageSwitcher } from "./library/language-switcher";
 import { ClientHintCheck, getHints } from "./services/client-hints";
 import tailwindcss from "./tailwind.css?url";
-import NavBar from "./ui/Navbar";
 import Footer from "./ui/Footer";
+import NavBar from "./ui/Navbar";
 import { TopBar } from "./ui/TopBar";
 
 export async function loader({ context, request }: Route.LoaderArgs) {
@@ -66,7 +66,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <Meta />
         <Links />
       </head>
-      <body className="w-full h-full">
+      <body className="w-full h-full font-Noto">
         {children}
         <ScrollRestoration />
         <Scripts />

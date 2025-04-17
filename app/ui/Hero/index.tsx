@@ -40,18 +40,15 @@ const Hero = () => {
 
   return (
     <div>
-      {/* ... other content ... */}
-      <section aria-label="Featured Content">
-        {/* Use the shadcn-based component */}
+      <section aria-label="Featured Content" className="py-10">
         <HeroCarouselShadcn
           slides={heroSlides}
           // Optional overrides:
           // heightClass="h-[500px] lg:h-[600px]"
           loop={true}
-          autoplayDelay={2000}
+          autoplayDelay={4500}
         />
       </section>
-      {/* ... other content ... */}
     </div>
   );
 };

@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    /* Your theme styles go here */
+    --font-Noto: "Noto Sans Arabic", sans-serif;
     --animate-float: float 3s ease-in-out infinite;
 
     @keyframes float {
@@ -61,6 +63,10 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+    --color-navbar-background: var(--navbar-background);
+    --color-navbar-foreground: var(--navbar-foreground);
+    --color-menu-hover: var(--menu-hover);
+    --color-menu-hover-foreground: var(--navbar-foreground);
 }
 
 :root {
@@ -77,8 +83,8 @@
     --secondary-foreground: oklch(0.208 0.042 265.755);
     --muted: oklch(0.968 0.007 247.896);
     --muted-foreground: oklch(0.554 0.046 257.417);
-    --accent: oklch(0.968 0.007 247.896);
-    --accent-foreground: oklch(0.208 0.042 265.755);
+    --accent: var(--menu-hover);
+    --accent-foreground: white;
     --destructive: oklch(0.577 0.245 27.325);
     --border: oklch(0.929 0.013 255.508);
     --input: oklch(0.929 0.013 255.508);
@@ -96,6 +102,9 @@
     --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
     --sidebar-border: oklch(0.929 0.013 255.508);
     --sidebar-ring: oklch(0.704 0.04 256.788);
+    --navbar-background: #084935;
+    --navbar-foreground: white;
+    --menu-hover: #085935;
 }
 
 .dark {

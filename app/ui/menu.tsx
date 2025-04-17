@@ -1,7 +1,3 @@
-import * as React from "react";
-import { Link } from "react-router"; // Or your framework's Link component, or 'a'
-// Import the Phosphor Icon
-import { cn } from "@/lib/utils"; // Shadcn utility for class names
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,6 +8,11 @@ import {
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+// Import the Phosphor Icon
+import { cn } from "@/lib/utils"; // Shadcn utility for class names
+import { motion } from "motion/react";
+import * as React from "react";
+import { Link } from "react-router"; // Or your framework's Link component, or 'a'
 
 // Import or define navigationData and MenuItemData type here
 // const navigationData: MenuItemData[] = [ ... ]; (from previous step)
@@ -36,7 +37,7 @@ const ListItem = React.forwardRef<
           to={href || "#"}
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-navbar-background hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className,
           )}
           {...props}
@@ -54,7 +55,6 @@ const ListItem = React.forwardRef<
 });
 ListItem.displayName = "ListItem";
 
-// Main Navigation Component
 export function SiteNavigation() {
   return (
     <NavigationMenu>
@@ -64,19 +64,19 @@ export function SiteNavigation() {
             // Item WITH Children (Dropdown)
             <NavigationMenuItem key={item.id}>
               {/* Added 'group' className for Radix state targeting */}
-              <NavigationMenuTrigger className="group bg-transparent">
-                {item.label}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] rtl:text-right ltr:text-left">
+              <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
+              <NavigationMenuContent className="">
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] rtl:text-right ltr:text-left  ">
                   {item.children.map((child) =>
                     // Handle nested children (like "تشكيلة السلطة")
                     child.children && child.children.length > 0 ? (
                       <React.Fragment key={child.id}>
                         {/* Optional: Sub-category title */}
                         {/* <li className="row-span-1 md:col-span-2">
-                            <div className="p-3 text-sm font-semibold text-foreground">{child.label}</div>
-                         </li> */}
+                          <div className="p-3 text-sm font-semibold text-foreground">
+                            {child.label}
+                          </div>
+                        </li> */}
                         {child.children.map((grandChild) => (
                           <ListItem
                             key={grandChild.id}

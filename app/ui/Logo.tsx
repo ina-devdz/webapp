@@ -1,23 +1,27 @@
-// app/components/Logo.tsx
-import { Link } from "react-router";
-
-const Logo: React.FC = () => {
+export const SultaAvatar = () => {
   return (
-    // Use Remix Link for navigation, pointing to the home page or appropriate base URL
-    <Link
-      to="/" // Adjust the 'to' prop as needed (e.g., "/" or "/en/")
-      // Combine classes from the original 'a' tag
-      className="cursor-pointer transition-colors relative outline-none before:absolute before:-inset-0.5 before:rounded before:border-2 before:border-black-off before:opacity-0 before:transition-opacity focus-visible:before:opacity-100 text-black-off hover:text-gray-700 dark:text-white dark:hover:text-gray-300" // Added dark mode text/hover colors
-      aria-label="ina election logo" // Keep the descriptive aria-label
-      // prefetch="intent" // Optional: Add Remix prefetching
-    >
-      <img
-        className="rounded-full size-16 m-auto"
-        src="/logo.avif"
-        alt="ina election Logo"
-      />
-    </Link>
+    <div className="flex flex-col gap-8">
+      <div className="flex items-center gap-4">
+        <div className="relative w-15 h-15 rounded-full overflow-hidden bg-gray-200">
+          <img
+            src={user.avatar}
+            alt={user.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="flex flex-col gap-0">
+          <span className="font-medium">{user.name}</span>
+          <span className="text-sm">{user.name_en}</span>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Logo;
+const user = {
+  name: "السلطة الوطنية المستقلة للانتخابات",
+  name_en: "Independent National Electoral Authority",
+  avatar: "/logo.avif",
+};
+
+export default SultaAvatar;

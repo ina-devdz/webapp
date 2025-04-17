@@ -1,16 +1,16 @@
-// app/components/HeroCarouselShadcn.tsx (adjust path as needed)
-import { useRef, useState, useEffect } from "react"; // Added useState, useEffect
 import Autoplay from "embla-carousel-autoplay";
+// app/components/HeroCarouselShadcn.tsx (adjust path as needed)
+import { useEffect, useRef, useState } from "react"; // Added useState, useEffect
 import { useTranslation } from "react-i18next";
 
 // Import shadcn UI components (adjust paths based on your project structure)
 import {
   Carousel,
+  type CarouselApi, // Import CarouselApi type
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi, // Import CarouselApi type
 } from "@/components/ui/carousel"; // Adjust this path
 import { CarouselSlide } from "./CarouselSlide"; // Import the slide component
 
@@ -50,7 +50,7 @@ const HeroCarouselShadcn: React.FC<HeroCarouselProps> = ({
     Autoplay({
       delay: autoplayDelay > 0 ? autoplayDelay : 5000, // Ensure valid delay
       stopOnInteraction: true,
-      stopOnMouseEnter: true,
+      stopOnMouseEnter: false,
     }),
   );
 
